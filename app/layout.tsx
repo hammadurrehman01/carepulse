@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { ThemeProvider } from "./components/theme-provider";
 
 const jakarta_sans = Plus_Jakarta_Sans({
   variable: "--jakarta-sans",
-  weight: ["200", "300", "400", "500", "600", "700", "800" ],
+  weight: ["200", "300", "400", "500", "600", "700", "800"],
   subsets: ["latin"],
 });
 export const metadata: Metadata = {
@@ -20,7 +21,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(`min-h-screen bg-dark-300 fonr-sans antialiased ${jakarta_sans.variable}`)}>{children}</body>
+      <body
+        className={cn(
+          `min-h-screen bg-dark-300 fonr-sans antialiased ${jakarta_sans.variable}`
+        )}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
