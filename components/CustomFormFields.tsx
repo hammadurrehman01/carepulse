@@ -2,16 +2,17 @@
 
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "./ui/input";
-import { Control } from "react-hook-form";
-import { FormFieldType } from "./forms/PatientForm";
 import Image from "next/image";
+import { Control } from "react-hook-form";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
+import { FormFieldType } from "./forms/PatientForm";
+import { Input } from "./ui/input";
 
 interface Props {
   control: Control<any>;
@@ -30,6 +31,7 @@ interface Props {
 
 const RenderField = ({ field, props }: { field: any; props: Props }) => {
   const { fieldType, placeholder, iconSrc, iconAlt, disabled } = props;
+
   switch (fieldType) {
     case FormFieldType.INPUT:
       return (
@@ -52,7 +54,12 @@ const RenderField = ({ field, props }: { field: any; props: Props }) => {
           </FormControl>
         </div>
       );
-      break;
+    case FormFieldType.PHONE_INPUT:
+      return (
+        <FormControl>
+          <PhoneInput onChange={() => console.log()} defaultCountry="US" placeholder={placeholder} international withCountryCallingCode  />
+        </FormControl>
+      );
 
     default:
       break;

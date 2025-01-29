@@ -19,6 +19,7 @@ export enum FormFieldType {
   TEXT_AREA = "textarea",
   DATE_PICKER = "datePicker",
   TIME_PICKER = "timePicker",
+  PHONE_INPUT = "phoneInput",
 }
 
 const PatientForm = () => {
@@ -39,6 +40,7 @@ const PatientForm = () => {
           <h1 className="header">Hi there 👋</h1>
           <p className="text-dark-700">Schedule your first appointment.</p>
         </section>
+
         <CustomFormFields
           fieldType={FormFieldType.INPUT}
           control={form.control}
@@ -48,6 +50,25 @@ const PatientForm = () => {
           iconSrc="/assets/icons/user.svg"
           iconAlt="user"
         />
+        <CustomFormFields
+          fieldType={FormFieldType.INPUT}
+          control={form.control}
+          name="email"
+          label="Email"
+          placeholder="hammadurrehman1954@gmail.com"
+          iconSrc="/assets/icons/email.svg"
+          iconAlt="email"
+        />
+        <CustomFormFields
+          fieldType={FormFieldType.PHONE_INPUT}
+          control={form.control}
+          name="phone"
+          label="Phone number"
+          placeholder="(555) 123-4567"
+          iconSrc="/assets/icons/email.svg"
+          iconAlt="email"
+        />
+
         <Button type="submit">Submit</Button>
       </form>
     </Form>
