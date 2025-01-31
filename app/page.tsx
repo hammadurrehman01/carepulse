@@ -1,6 +1,9 @@
+"use client";
+
 import PatientForm from "@/components/forms/PatientForm";
 import Image from "next/image";
 import Link from "next/link";
+
 export default function Home() {
   return (
     <div className="flex h-screen max-h-screen">

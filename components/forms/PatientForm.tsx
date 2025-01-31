@@ -2,10 +2,11 @@
 
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import CustomFormFields from "../CustomFormFields";
-import { Button } from "../ui/button";
+import SubmitButton from "../SubmitButton";
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),
@@ -23,6 +24,8 @@ export enum FormFieldType {
 }
 
 const PatientForm = () => {
+ const [isLoading, setIsLoading] = useState(false)
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -69,7 +72,7 @@ const PatientForm = () => {
           iconAlt="email"
         />
 
-        <Button type="submit">Submit</Button>
+        <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
       </form>
     </Form>
   );

@@ -57,7 +57,15 @@ const RenderField = ({ field, props }: { field: any; props: Props }) => {
     case FormFieldType.PHONE_INPUT:
       return (
         <FormControl>
-          <PhoneInput onChange={() => console.log()} defaultCountry="US" placeholder={placeholder} international withCountryCallingCode  />
+          <PhoneInput
+            defaultCountry="US"
+            placeholder={placeholder}
+            international
+            withCountryCallingCode
+            value={field.value}
+            onChange={field.onChange}
+            className="input-phone"
+          />
         </FormControl>
       );
 
