@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import CustomFormFields from "../CustomFormFields";
 import SubmitButton from "../SubmitButton";
+import { UserformValidation } from "@/lib/validation";
+import { createSecureServer } from "http2";
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),
@@ -24,17 +26,33 @@ export enum FormFieldType {
 }
 
 const PatientForm = () => {
- const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof UserformValidation>>({
+    resolver: zodResolver(UserformValidation),
     defaultValues: {
-      username: "",
+      name: "",
+      email: "",
+      phone: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit({
+    name,
+    email,
+    phone,
+  }: z.infer<typeof UserformValidation>) {
+    setIsLoading(true);
+    try {
+      // const userData = { name, email, phone };
+
+      // const user = await createUser(userData);
+
+      // if(user) router.push(`/patients/${user.$id}/register`);
+
+    } catch (error: any) {
+      console.log(error.message);
+    }
   }
   return (
     <Form {...form}>
