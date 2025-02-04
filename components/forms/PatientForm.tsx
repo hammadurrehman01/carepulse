@@ -9,6 +9,7 @@ import CustomFormFields from "../CustomFormFields";
 import SubmitButton from "../SubmitButton";
 import { UserformValidation } from "@/lib/validation";
 import { createSecureServer } from "http2";
+import { createUser } from "@/lib/actions/patient.actions";
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),
@@ -44,9 +45,9 @@ const PatientForm = () => {
   }: z.infer<typeof UserformValidation>) {
     setIsLoading(true);
     try {
-      // const userData = { name, email, phone };
+      const userData = { name, email, phone };
 
-      // const user = await createUser(userData);
+      const user = await createUser(userData);
 
       // if(user) router.push(`/patients/${user.$id}/register`);
 
