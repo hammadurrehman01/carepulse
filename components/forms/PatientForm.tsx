@@ -25,6 +25,8 @@ export enum FormFieldType {
   DATE_PICKER = "datePicker",
   TIME_PICKER = "timePicker",
   PHONE_INPUT = "phoneInput",
+  SKELETON = "skeleton",
+
 }
 
 const PatientForm = () => {
@@ -89,7 +91,7 @@ const PatientForm = () => {
           label="Phone number"
           placeholder="(555) 123-4567"
           iconSrc="/assets/icons/email.svg"
-          iconAlt="email"
+          iconAlt="phone"
         />
 
         <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
