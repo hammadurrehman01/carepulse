@@ -12,8 +12,10 @@ import { createUser } from "@/lib/actions/patient.actions";
 import { useRouter } from "next/navigation";
 import { FormFieldType } from "./PatientForm";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { GenderOptions } from "@/constants";
+import { Doctors, GenderOptions } from "@/constants";
 import { Label } from "../ui/label";
+import { SelectItem } from "../ui/select";
+import Image from "next/image";
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),
@@ -56,6 +58,8 @@ const RegisterForm = ({ user }: { user: User }) => {
           <p className="text-dark-700">Let us know more about yourself.</p>
         </section>
 
+        {/* Personal Information Section */}
+
         <section className="space-y-6">
           <div className="mb-9 space-y-1">
             <h2 className="sub-header"> Personal Information</h2>
@@ -65,6 +69,7 @@ const RegisterForm = ({ user }: { user: User }) => {
         <CustomFormFields
           fieldType={FormFieldType.INPUT}
           control={form.control}
+          className="w-full"
           name="name"
           placeholder="John Doe"
           iconSrc="/assets/icons/user.svg"
@@ -130,20 +135,16 @@ const RegisterForm = ({ user }: { user: User }) => {
           <CustomFormFields
             fieldType={FormFieldType.INPUT}
             control={form.control}
-            name="email"
-            label="Email"
-            placeholder="hammadurrehman1954@gmail.com"
-            iconSrc="/assets/icons/email.svg"
-            iconAlt="email"
+            name="address"
+            label="Address"
+            placeholder="14th street, New York"
           />
           <CustomFormFields
-            fieldType={FormFieldType.PHONE_INPUT}
+            fieldType={FormFieldType.INPUT}
             control={form.control}
-            name="phone"
-            label="Phone number"
-            placeholder="(555) 123-4567"
-            iconSrc="/assets/icons/email.svg"
-            iconAlt="phone"
+            name="occupation"
+            label="Occupation"
+            placeholder="Software Engineer"
           />
         </div>
 
@@ -151,41 +152,105 @@ const RegisterForm = ({ user }: { user: User }) => {
           <CustomFormFields
             fieldType={FormFieldType.INPUT}
             control={form.control}
-            name="email"
-            label="Email"
-            placeholder="hammadurrehman1954@gmail.com"
-            iconSrc="/assets/icons/email.svg"
-            iconAlt="email"
+            name="emergencyContactName"
+            label="Emergency contact name"
+            placeholder="Guardian's name"
           />
           <CustomFormFields
             fieldType={FormFieldType.PHONE_INPUT}
             control={form.control}
-            name="phone"
-            label="Phone number"
+            name="emergencyContactNumber"
+            label="Emergency contact number"
             placeholder="(555) 123-4567"
-            iconSrc="/assets/icons/email.svg"
-            iconAlt="phone"
           />
         </div>
+
+        {/* Medical Information */}
+
+        <section className="space-y-6">
+          <div className="mb-9 space-y-1">
+            <h2 className="sub-header"> Medical Information</h2>
+          </div>
+        </section>
+
+        <CustomFormFields
+          fieldType={FormFieldType.SELECT}
+          control={form.control}
+          label="Primary care physician"
+          name="primaryPhysician"
+          placeholder="Select a physician"
+          iconSrc="/assets/icons/user.svg"
+          iconAlt="user"
+          className="w-full"
+        >
+          {Doctors.map((doctor) => (
+            <SelectItem
+              key={doctor.name}
+              value={doctor.name}
+              className="bg-dark-500"
+            >
+              <div className="flex items-center gap-2 cursor-pointer ">
+                <Image
+                  src={doctor.image}
+                  alt={doctor.name}
+                  width={32}
+                  height={32}
+                  className="rounded-full border border-dark-500 "
+                />
+                <p>{doctor.name}</p>
+              </div>
+            </SelectItem>
+          ))}
+        </CustomFormFields>
 
         <div className="flex flex-col xl:flex-row gap-6">
           <CustomFormFields
             fieldType={FormFieldType.INPUT}
             control={form.control}
-            name="email"
-            label="Email"
-            placeholder="hammadurrehman1954@gmail.com"
-            iconSrc="/assets/icons/email.svg"
-            iconAlt="email"
+            name="incuranceProvider"
+            label="Incurance provider"
+            placeholder="BlueCross BlueShield"
           />
           <CustomFormFields
-            fieldType={FormFieldType.PHONE_INPUT}
+            fieldType={FormFieldType.INPUT}
             control={form.control}
-            name="phone"
-            label="Phone number"
-            placeholder="(555) 123-4567"
-            iconSrc="/assets/icons/email.svg"
-            iconAlt="phone"
+            name="incurancePolicyNumber"
+            label="Incurance policy number"
+            placeholder="ABC12345678"
+          />
+        </div>
+
+        <div className="flex flex-col xl:flex-row gap-6">
+          <CustomFormFields
+            fieldType={FormFieldType.TEXT_AREA}
+            control={form.control}
+            name="allergies"
+            label="Allergies (if any)"
+            placeholder="ex: Peanuts, Penicillin, Pollen"
+          />
+          <CustomFormFields
+            fieldType={FormFieldType.TEXT_AREA}
+            control={form.control}
+            name="currentMedication"
+            label="Current medications"
+            placeholder="ex: Ibuprofen 200mg, Levothyroxine 50mcg"
+          />
+        </div>
+
+        <div className="flex flex-col xl:flex-row gap-6">
+          <CustomFormFields
+            fieldType={FormFieldType.TEXT_AREA}
+            control={form.control}
+            name="familyMedicalHistory"
+            label="Family medical history (if relevant)"
+            placeholder="ex: Mother has disease"
+          />
+          <CustomFormFields
+            fieldType={FormFieldType.TEXT_AREA}
+            control={form.control}
+            name="pastMedicalHistory"
+            label="Past medical history"
+            placeholder="ex: Asthma diagnosis in childhood"
           />
         </div>
 
