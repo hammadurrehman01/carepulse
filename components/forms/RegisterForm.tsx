@@ -12,10 +12,11 @@ import { createUser } from "@/lib/actions/patient.actions";
 import { useRouter } from "next/navigation";
 import { FormFieldType } from "./PatientForm";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { Doctors, GenderOptions } from "@/constants";
+import { Doctors, GenderOptions, IdentificationTypes } from "@/constants";
 import { Label } from "../ui/label";
 import { SelectItem } from "../ui/select";
 import Image from "next/image";
+import {FileUploader} from "../FileUploader";
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),
@@ -179,8 +180,6 @@ const RegisterForm = ({ user }: { user: User }) => {
           label="Primary care physician"
           name="primaryPhysician"
           placeholder="Select a physician"
-          iconSrc="/assets/icons/user.svg"
-          iconAlt="user"
           className="w-full"
         >
           {Doctors.map((doctor) => (
@@ -253,6 +252,51 @@ const RegisterForm = ({ user }: { user: User }) => {
             placeholder="ex: Asthma diagnosis in childhood"
           />
         </div>
+
+        {/* Identification and Verification */}
+
+        <section className="space-y-6">
+          <div className="mb-9 space-y-1">
+            <h2 className="sub-header">Identification and Verfication</h2>
+          </div>
+        </section>
+
+        <CustomFormFields
+          fieldType={FormFieldType.SELECT}
+          control={form.control}
+          name="identificationType"
+          label="Identification Type"
+          placeholder="Select a identification type"
+          className="w-full"
+        >
+          {IdentificationTypes.map((type) => (
+            <SelectItem key={type} value={type} className="bg-dark-500">
+              {type}
+            </SelectItem>
+          ))}
+        </CustomFormFields>
+
+        <CustomFormFields
+          fieldType={FormFieldType.INPUT}
+          control={form.control}
+          name="identitificationNumber"
+          label="Identitification Number"
+          placeholder="123456789"
+          className="w-full"
+        />
+
+        <CustomFormFields
+          fieldType={FormFieldType.SKELETON}
+          control={form.control}
+          name="identificationDocument"
+          label="Scanned Copy of Identification Document"
+          className="w-full"
+          renderSkeleton={(field) => (
+            <FormControl>
+              <FileUploader />
+            </FormControl>
+          )}
+        />
 
         <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
       </form>
