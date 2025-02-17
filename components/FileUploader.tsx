@@ -22,12 +22,26 @@ export const FileUploader = ({ files, onChange }: Props) => {
         <Image
           src={convertFileToUrl(files[0])}
           alt="uploaded image"
-          height={1000}
           width={1000}
+          height={1000}
           className="max-h-[400px] overflow-hidden object-cover"
         />
       ) : (
-        <p>Drag 'n' drop some files here, or click to select files</p>
+        <>
+          <Image
+            src="/assets/icons/upload.svg"
+            alt="upload"
+            width={40}
+            height={40}
+          />
+          <div className="file-upload_label">
+            <p className="text-14-regular">
+              <span className="text-green-500">Click to upload</span> or drag
+              and drop
+            </p>
+            <p>SVG, PNG, JPG or Gif (max 800x400)</p>
+          </div>
+        </>
       )}
     </div>
   );
