@@ -16,7 +16,7 @@ import { Doctors, GenderOptions, IdentificationTypes } from "@/constants";
 import { Label } from "../ui/label";
 import { SelectItem } from "../ui/select";
 import Image from "next/image";
-import {FileUploader} from "../FileUploader";
+import { FileUploader } from "../FileUploader";
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),
@@ -293,9 +293,39 @@ const RegisterForm = ({ user }: { user: User }) => {
           className="w-full"
           renderSkeleton={(field) => (
             <FormControl>
-              <FileUploader />
+              <FileUploader files={field.value} onChange={field.onChange} />
             </FormControl>
           )}
+        />
+
+        {/* Consent and Privacy */}
+
+        <section className="space-y-6">
+          <div className="mb-9 space-y-1">
+            <h2 className="sub-header">Consent and Privacy</h2>
+          </div>
+        </section>
+
+        <CustomFormFields
+          fieldType={FormFieldType.CHECK_BOX}
+          control={form.control}
+          name="treatmentConsent"
+          label="I consent to receive treatment for my health condition."
+          className="w-full"
+        />
+        <CustomFormFields
+          fieldType={FormFieldType.CHECK_BOX}
+          control={form.control}
+          name="disclosureConsent"
+          label="I consent to the use and disclosure of my health information for treatment purposes."
+          className="w-full"
+        />
+        <CustomFormFields
+          fieldType={FormFieldType.CHECK_BOX}
+          control={form.control}
+          name="privacyConsent"
+          label="I acknowledge that I have reviewed and agree to the privacy policy"
+          className="w-full"
         />
 
         <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
