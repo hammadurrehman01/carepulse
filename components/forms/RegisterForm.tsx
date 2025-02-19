@@ -7,12 +7,17 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import CustomFormFields from "../CustomFormFields";
 import SubmitButton from "../SubmitButton";
-import { UserformValidation } from "@/lib/validation";
+import { PatientFormValidation } from "@/lib/validation";
 import { createUser } from "@/lib/actions/patient.actions";
 import { useRouter } from "next/navigation";
 import { FormFieldType } from "./PatientForm";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { Doctors, GenderOptions, IdentificationTypes } from "@/constants";
+import {
+  Doctors,
+  GenderOptions,
+  IdentificationTypes,
+  PatientFormDefaultValues,
+} from "@/constants";
 import { Label } from "../ui/label";
 import { SelectItem } from "../ui/select";
 import Image from "next/image";
@@ -26,27 +31,44 @@ const RegisterForm = ({ user }: { user: User }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const form = useForm<z.infer<typeof UserformValidation>>({
-    resolver: zodResolver(UserformValidation),
+  const form = useForm<z.infer<typeof PatientFormValidation>>({
+    resolver: zodResolver(PatientFormValidation),
     defaultValues: {
+      ...PatientFormDefaultValues,
       name: "",
       email: "",
       phone: "",
     },
   });
 
-  async function onSubmit({
-    name,
-    email,
-    phone,
-  }: z.infer<typeof UserformValidation>) {
+  async function onSubmit(values: z.infer<typeof PatientFormValidation>) {
     setIsLoading(true);
+    let formData;
+
+    if (
+      values.identificationDocument &&
+      values.identificationDocument.length > 0
+    ) {
+      const blobFile = new Blob([values.identificationDocument[0]], {
+        type: values.identificationDocument[0].type,
+      });
+
+      formData = new FormData();
+
+      formData.append("blobfile", blobFile);
+      formData.append("fileName", values.identificationDocument[0].name);
+    }
+
     try {
-      const userData = { name, email, phone };
+      const patientData = {
+        ...values,
+        birthDate: new Date(values.birthDate),
+        identificationDocument: formData,
+      };
 
-      const user = await createUser(userData);
+      const patient = await registerPatient(patientData);
 
-      if (user) router.push(`/patients/${user.$id}/register`);
+      if (patient) router.push(`/patient/${user.$id}/new-appoinment`);
     } catch (error: any) {
       console.log(error.message);
     }

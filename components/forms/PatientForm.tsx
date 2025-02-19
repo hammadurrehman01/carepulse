@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import CustomFormFields from "../CustomFormFields";
 import SubmitButton from "../SubmitButton";
-import { UserformValidation } from "@/lib/validation";
+import { UserFormValidation } from "@/lib/validation";
 import { createSecureServer } from "http2";
 import { createUser } from "@/lib/actions/patient.actions";
 import { useRouter } from "next/navigation";
@@ -26,15 +26,14 @@ export enum FormFieldType {
   TIME_PICKER = "timePicker",
   PHONE_INPUT = "phoneInput",
   SKELETON = "skeleton",
-
 }
 
 const PatientForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const form = useForm<z.infer<typeof UserformValidation>>({
-    resolver: zodResolver(UserformValidation),
+  const form = useForm<z.infer<typeof UserFormValidation>>({
+    resolver: zodResolver(UserFormValidation),
     defaultValues: {
       name: "",
       email: "",
@@ -46,7 +45,7 @@ const PatientForm = () => {
     name,
     email,
     phone,
-  }: z.infer<typeof UserformValidation>) {
+  }: z.infer<typeof UserFormValidation>) {
     setIsLoading(true);
     try {
       const userData = { name, email, phone };
