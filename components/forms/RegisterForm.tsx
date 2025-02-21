@@ -8,7 +8,7 @@ import { z } from "zod";
 import CustomFormFields from "../CustomFormFields";
 import SubmitButton from "../SubmitButton";
 import { PatientFormValidation } from "@/lib/validation";
-import { createUser } from "@/lib/actions/patient.actions";
+import { createUser, registerPatient } from "@/lib/actions/patient.actions";
 import { useRouter } from "next/navigation";
 import { FormFieldType } from "./PatientForm";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
@@ -62,10 +62,12 @@ const RegisterForm = ({ user }: { user: User }) => {
     try {
       const patientData = {
         ...values,
+        userId: user.$id,
         birthDate: new Date(values.birthDate),
         identificationDocument: formData,
       };
 
+      // @ts-ignore
       const patient = await registerPatient(patientData);
 
       if (patient) router.push(`/patient/${user.$id}/new-appoinment`);
@@ -73,6 +75,7 @@ const RegisterForm = ({ user }: { user: User }) => {
       console.log(error.message);
     }
   }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

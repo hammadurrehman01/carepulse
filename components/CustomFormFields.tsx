@@ -63,6 +63,7 @@ const RenderField = ({ field, props }: { field: any; props: Props }) => {
           )}
           <FormControl>
             <Input
+              onChange={field.onChange}
               placeholder={placeholder}
               {...field}
               className="shad-input border-0"
@@ -74,6 +75,7 @@ const RenderField = ({ field, props }: { field: any; props: Props }) => {
       return (
         <FormControl>
           <Textarea
+            onChange={field.onChange}
             placeholder={placeholder}
             {...field}
             className="shad-textArea"
