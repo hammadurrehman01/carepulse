@@ -11,6 +11,7 @@ const SubmitButton = ({ isLoading, children, className }: Props) => {
   return (
     <Button
       type="submit"
+      
       disabled={isLoading}
       className={className ?? "shad-primary-btn w-full"}
     >

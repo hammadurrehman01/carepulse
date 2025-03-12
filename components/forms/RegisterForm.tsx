@@ -28,6 +28,8 @@ const formSchema = z.object({
 });
 
 const RegisterForm = ({ user }: { user: User }) => {
+  console.log(user);
+  
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
