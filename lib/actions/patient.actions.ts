@@ -16,16 +16,20 @@ import { parseStringify } from "../utils";
 
 export const createUser = async (user: CreateUserParams) => {
   try {
-    const newUser = await users.create(
+  
+    const newuser = await users.create(
       ID.unique(),
       user.email,
-      user.name,
-      user.phone
+      user.phone,
+      undefined,
+      user.name
     );
+
+    return parseStringify(newuser);
   } catch (error: any) {
     if (error && error.code === 409) {
       const documents = await users.list([Query.equal("email", [user.email])]);
-
+      console.log("documents ==>", documents);
       return documents?.users[0];
     }
   }

@@ -52,9 +52,11 @@ const PatientForm = () => {
 
       const user = await createUser(userData);
 
+      console.log("user ban gaya ==>", user);
+
       if (user) router.push(`/patients/${user.$id}/register`);
     } catch (error: any) {
-      console.log(error.message);
+      console.log(error.message); 
     }
   }
   return (

@@ -1,27 +1,27 @@
 "use client";
 
 import { Form, FormControl } from "@/components/ui/form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import CustomFormFields from "../CustomFormFields";
-import SubmitButton from "../SubmitButton";
-import { PatientFormValidation } from "@/lib/validation";
-import { createUser, registerPatient } from "@/lib/actions/patient.actions";
-import { useRouter } from "next/navigation";
-import { FormFieldType } from "./PatientForm";
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import {
   Doctors,
   GenderOptions,
   IdentificationTypes,
   PatientFormDefaultValues,
 } from "@/constants";
-import { Label } from "../ui/label";
-import { SelectItem } from "../ui/select";
+import { registerPatient } from "@/lib/actions/patient.actions";
+import { PatientFormValidation } from "@/lib/validation";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import CustomFormFields from "../CustomFormFields";
 import { FileUploader } from "../FileUploader";
+import SubmitButton from "../SubmitButton";
+import { Label } from "../ui/label";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { SelectItem } from "../ui/select";
+import { FormFieldType } from "./PatientForm";
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),
