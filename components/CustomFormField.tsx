@@ -152,7 +152,7 @@ const RenderField = ({ field, props }: { field: any; props: Props }) => {
   }
 };
 
-const CustomFormFields = (props: Props) => {
+const CustomFormField = (props: Props) => {
   const {
     control,
     fieldType,
@@ -187,4 +187,4 @@ const CustomFormFields = (props: Props) => {
   );
 };
 
-export default CustomFormFields;
+export default CustomFormField;

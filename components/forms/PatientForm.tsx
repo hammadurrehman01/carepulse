@@ -5,12 +5,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import CustomFormFields from "../CustomFormFields";
+import CustomFormFields from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
 import { UserFormValidation } from "@/lib/validation";
 import { createSecureServer } from "http2";
 import { createUser } from "@/lib/actions/patient.actions";
 import { useRouter } from "next/navigation";
+import CustomFormField from "../CustomFormField";
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),
@@ -41,22 +42,22 @@ const PatientForm = () => {
     },
   });
 
-  async function onSubmit({
-    name,
-    email,
-    phone,
-  }: z.infer<typeof UserFormValidation>) {
+  async function onSubmit(values: z.infer<typeof UserFormValidation>) {
     setIsLoading(true);
     try {
-      const userData = { name, email, phone };
+      const user = {
+        name: values.name,
+        email: values.email,
+        phone: values.phone,
+      };
 
-      const user = await createUser(userData);
+      const newUser = await createUser(user);
 
-      console.log("user ban gaya ==>", user);
+      console.log("user ban gaya ==>", newUser);
 
-      if (user) router.push(`/patients/${user.$id}/register`);
+      if (newUser) router.push(`/patients/${newUser.$id}/register`);
     } catch (error: any) {
-      console.log(error.message); 
+      console.log(error.message);
     }
   }
   return (
@@ -67,7 +68,7 @@ const PatientForm = () => {
           <p className="text-dark-700">Schedule your first appointment.</p>
         </section>
 
-        <CustomFormFields
+        <CustomFormField
           fieldType={FormFieldType.INPUT}
           control={form.control}
           name="name"
@@ -76,7 +77,7 @@ const PatientForm = () => {
           iconSrc="/assets/icons/user.svg"
           iconAlt="user"
         />
-        <CustomFormFields
+        <CustomFormField
           fieldType={FormFieldType.INPUT}
           control={form.control}
           name="email"
@@ -85,7 +86,7 @@ const PatientForm = () => {
           iconSrc="/assets/icons/email.svg"
           iconAlt="email"
         />
-        <CustomFormFields
+        <CustomFormField
           fieldType={FormFieldType.PHONE_INPUT}
           control={form.control}
           name="phone"
